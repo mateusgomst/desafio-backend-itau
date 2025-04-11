@@ -18,6 +18,9 @@ public class TransactionService {
         transactions.add(transaction);
     }
 
+    public void clearTransactions() {
+        transactions.clear();
+    }
 
     private void validateTransaction(Transaction transaction) {
         if (transaction == null) {
