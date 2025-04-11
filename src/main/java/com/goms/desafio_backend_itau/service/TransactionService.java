@@ -18,18 +18,19 @@ public class TransactionService {
         transactions.add(transaction);
     }
 
+
     private void validateTransaction(Transaction transaction) {
         if (transaction == null) {
-            throw new IllegalArgumentException("Transaction cannot be null");
+            throw new TransactionException("Transaction cannot be null");
         }
         if (transaction.getAmount() == null || transaction.getDate() == null) {
-            throw new IllegalArgumentException("Transaction amount and date cannot be null");
+            throw new TransactionException("Transaction amount and date cannot be null");
         }
         if (transaction.getAmount() < 0) {
-            throw new IllegalArgumentException("Transaction amount must be greater than zero");
+            throw new TransactionException("Transaction amount must be greater than zero");
         }
         if (transaction.getDate().isAfter(OffsetDateTime.now())) {
-            throw new IllegalArgumentException("Transaction date cannot be in the future");
+            throw new TransactionException("Transaction date cannot be in the future");
         }
     }
 }
