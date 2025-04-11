@@ -1,5 +1,6 @@
 package com.goms.desafio_backend_itau.controller;
 
+import com.goms.desafio_backend_itau.model.Statistics;
 import com.goms.desafio_backend_itau.model.Transaction;
 import com.goms.desafio_backend_itau.service.TransactionService;
 import org.springframework.http.HttpStatus;
@@ -25,5 +26,11 @@ public class TransactionController {
         transactionService.clearTransactions();
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/estatisticas")
+    public ResponseEntity<Statistics> getStatistics(@RequestParam long seconds) {
+        return ResponseEntity.ok(transactionService.getStatistics(seconds));
+    }
+
 
 }

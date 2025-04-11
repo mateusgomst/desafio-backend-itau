@@ -1,12 +1,14 @@
 package com.goms.desafio_backend_itau.service;
 
 import com.goms.desafio_backend_itau.exceptions.TransactionException;
+import com.goms.desafio_backend_itau.model.Statistics;
 import com.goms.desafio_backend_itau.model.Transaction;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -20,6 +22,18 @@ public class TransactionService {
 
     public void clearTransactions() {
         transactions.clear();
+    }
+
+    public Statistics getStatistics(long seconds) {
+        OffsetDateTime cutoffTime = OffsetDateTime.now().minusSeconds(seconds);
+
+        List<Transaction> recentTransactions = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().isAfter(cutoffTime) || transaction.getDate().equals(cutoffTime)) {
+                recentTransactions.add(transaction);
+            }
+        }
+        return new Statistics(recentTransactions);
     }
 
     private void validateTransaction(Transaction transaction) {
